@@ -1,9 +1,7 @@
 @import "compass/css3/box-sizing";
 @import "compass/css3/images";
 @import "compass/css3/user-interface";
-
-$chosen-sprite: image-url('chosen-sprite.png') !default;
-$chosen-sprite-retina: image-url('chosen-sprite@2x.png') !default;
+@import "compass/css3/transform";
 
 /* @group Base */
 .chosen-container {
@@ -71,19 +69,17 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png') !default;
   }
   .chosen-single abbr {
     position: absolute;
-    top: 6px;
+    top: -1px;
     right: 26px;
     display: block;
-    width: 12px;
-    height: 12px;
-    background: $chosen-sprite -42px 1px no-repeat;
-    font-size: 1px;
+    font-size: 16px;
+    color: #888;
     &:hover {
-      background-position: -42px -10px;
+      color: #464646;
     }
   }
   &.chosen-disabled .chosen-single abbr:hover {
-    background-position: -42px -10px;
+      color: #464646;
   }
   .chosen-single div {
     position: absolute;
@@ -93,10 +89,13 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png') !default;
     width: 18px;
     height: 100%;
     b {
-      display: block;
-      width: 100%;
-      height: 100%;
-      background: $chosen-sprite no-repeat 0px 2px;
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid #888;
+      position: absolute;
+      top: 10px;
     }
   }
   .chosen-search {
@@ -112,13 +111,25 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png') !default;
       height: auto;
       outline: 0;
       border: 1px solid #aaa;
-      background: #fff $chosen-sprite no-repeat 100% -20px;
-      @include background($chosen-sprite no-repeat 100% -20px);
+      background: #fff;
       font-size: 1em;
       font-family: sans-serif;
       line-height: normal;
       border-radius: 0;
     }
+
+    &:after {
+      content:'\26B2';
+      color: #888;
+      color: transparent \0/IE9;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      @include rotate(-45deg);
+    }
+
   }
   .chosen-drop {
     margin-top: -1px;
@@ -243,15 +254,15 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png') !default;
       }
       .search-choice-close {
         position: absolute;
-        top: 4px;
-        right: 3px;
+        top: 3px;
+        right: 6px;
         display: block;
-        width: 12px;
-        height: 12px;
-        background: $chosen-sprite -42px 1px no-repeat;
-        font-size: 1px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #888;
+        text-decoration: none;        
         &:hover {
-          background-position: -42px -10px;
+          color: #464646;
         }
       }
     }
@@ -301,7 +312,10 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png') !default;
       border-left: none;
       background: transparent;
       b {
-        background-position: -18px 2px;
+        width: 0;
+        height: 0;
+        border-bottom: 4px solid #888;
+        border-top: none;
       }
     }
   }
@@ -346,11 +360,16 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png') !default;
   .chosen-single div {
     right: auto;
     left: 3px;
+
+    b {
+      left: 6px;
+    }
   }
   .chosen-single abbr {
     right: auto;
     left: 26px;
   }
+
   .chosen-choices li {
     float: right;
     &.search-field input[type="text"] {
@@ -380,38 +399,15 @@ $chosen-sprite-retina: image-url('chosen-sprite@2x.png') !default;
   &.chosen-container-active.chosen-with-drop .chosen-single div {
     border-right: none;
   }
-  .chosen-search input[type="text"] {
-    padding: 4px 5px 4px 20px;
-    background: #fff $chosen-sprite no-repeat -30px -20px;
-    @include background($chosen-sprite no-repeat -30px -20px);
-    direction: rtl;
-  }
-  &.chosen-container-single{
-    .chosen-single div b {
-      background-position: 6px 2px;
+
+  .chosen-search {
+    input[type="text"] {
+      padding: 4px 5px 4px 20px;
+      direction: rtl;
     }
-    &.chosen-with-drop{
-      .chosen-single div b {
-        background-position: -12px 2px;
-      }
+    &:after {
+      left: 10px;
+      right: auto;
     }
   }
 }
-
-/* @end */
-
-/* @group Retina compatibility */
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 144dpi)  {
-  .chosen-rtl .chosen-search input[type="text"],
-  .chosen-container-single .chosen-single abbr,
-  .chosen-container-single .chosen-single div b,
-  .chosen-container-single .chosen-search input[type="text"],
-  .chosen-container-multi .chosen-choices .search-choice .search-choice-close,
-  .chosen-container .chosen-results-scroll-down span,
-  .chosen-container .chosen-results-scroll-up span {
-    background-image: $chosen-sprite-retina !important;
-    background-size: 52px 37px !important;
-    background-repeat: no-repeat !important;
-  }
-}
-/* @end */
