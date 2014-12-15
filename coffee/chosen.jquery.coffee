@@ -32,7 +32,7 @@ class Chosen extends AbstractChosen
 
     container_props =
       'class': container_classes.join ' '
-      'style': "width: #{this.container_width()};"
+      'style': "width: 100%;"
       'title': @form_field.title
 
     container_props.id = @form_field.id.replace(/[^\w]/g, '_') + "_chosen" if @form_field.id.length
@@ -296,7 +296,7 @@ class Chosen extends AbstractChosen
     if item.disabled
       choice.addClass 'search-choice-disabled'
     else
-      close_link = $('<a />', { class: 'search-choice-close', 'data-option-array-index': item.array_index })
+      close_link = $('<a>&times;</a>').attr({ class: 'search-choice-close', 'data-option-array-index': item.array_index })
       close_link.bind 'click.chosen', (evt) => this.choice_destroy_link_click(evt)
       choice.append close_link
 
@@ -394,7 +394,7 @@ class Chosen extends AbstractChosen
 
   single_deselect_control_build: ->
     return unless @allow_single_deselect
-    @selected_item.find("span").first().after "<abbr class=\"search-choice-close\"></abbr>" unless @selected_item.find("abbr").length
+    @selected_item.find("span").first().after "<abbr class='search-choice-close'>&times;</abbr>" unless @selected_item.find("abbr").length
     @selected_item.addClass("chosen-single-with-deselect")
 
   get_search_text: ->
